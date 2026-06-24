@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil | VYBE Pass</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif}
+    body{
+      min-height:100vh;color:#fff;overflow-x:hidden;padding-bottom:96px;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(236,72,153,.34), transparent 30%),
+        radial-gradient(circle at 88% 14%, rgba(59,130,246,.27), transparent 34%),
+        radial-gradient(circle at 50% 100%, rgba(124,58,237,.38), transparent 40%),
+        #070713;
+    }
+    a{text-decoration:none;color:inherit}
+
+    .orb{position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(62px);opacity:.55;animation:float 8s ease-in-out infinite;pointer-events:none;z-index:1}
+    .orb.one{top:10%;left:-90px;background:#ec4899}
+    .orb.two{right:-90px;top:22%;background:#3b82f6;animation-delay:1.7s}
+    .orb.three{left:45%;bottom:-130px;background:#7c3aed;animation-delay:3s}
+    @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.08)}}
+
+    .page{position:relative;z-index:2;max-width:980px;margin:auto;padding:24px}
+    header{display:flex;justify-content:space-between;align-items:center;animation:down .7s ease both}
+    .brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:900;letter-spacing:-.04em}
+    .brand-icon{width:43px;height:43px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);box-shadow:0 18px 45px rgba(124,58,237,.45)}
+    .brand-icon span{font-weight:900;font-size:23px}
+    .top-btn{padding:12px 17px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);font-weight:800;color:rgba(255,255,255,.86)}
+
+    main{padding:36px 0 60px;display:grid;gap:18px}
+
+    .profile-hero{
+      position:relative;overflow:hidden;border-radius:40px;padding:24px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(24px);box-shadow:0 34px 95px rgba(0,0,0,.35);
+      animation:appear .8s ease .08s both;
+    }
+    .cover{
+      height:170px;border-radius:30px;position:relative;overflow:hidden;
+      background:linear-gradient(135deg,rgba(236,72,153,.95),rgba(124,58,237,.9),rgba(59,130,246,.85));
+    }
+    .cover::after{
+      content:"";position:absolute;inset:-40%;
+      background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+      animation:shine 4s ease-in-out infinite;
+    }
+    @keyframes shine{0%{transform:translateX(-100%) rotate(20deg)}45%,100%{transform:translateX(100%) rotate(20deg)}}
+
+    .avatar{
+      width:110px;height:110px;border-radius:34px;margin:-54px auto 0;
+      background:linear-gradient(135deg,#121225,#2d0b4f);
+      border:5px solid rgba(255,255,255,.13);
+      display:grid;place-items:center;position:relative;z-index:3;
+      box-shadow:0 18px 48px rgba(0,0,0,.35);
+      font-size:38px;font-weight:900;
+    }
+
+    .profile-info{text-align:center;margin-top:14px}
+    .profile-info h1{font-size:34px;letter-spacing:-.06em}
+    .profile-info p{margin-top:6px;color:rgba(255,255,255,.6);font-weight:800}
+    .role-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+    .role-pill{
+      padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.13);font-size:13px;font-weight:900;color:rgba(255,255,255,.86)
+    }
+    .role-pill.main{background:linear-gradient(135deg,rgba(236,72,153,.28),rgba(124,58,237,.26),rgba(59,130,246,.22));color:#fff}
+
+    .quick-stats{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .stat{
+      padding:17px;border-radius:24px;background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.09);text-align:center;
+    }
+    .stat small{color:rgba(255,255,255,.5);font-weight:800}
+    .stat strong{display:block;margin-top:7px;font-size:24px;letter-spacing:-.05em}
+
+    .section-head{margin-top:12px}
+    .section-head h2{font-size:29px;letter-spacing:-.05em}
+    .section-head p{margin-top:6px;color:rgba(255,255,255,.58);line-height:1.5}
+
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+
+    .access-card{
+      position:relative;overflow:hidden;min-height:156px;padding:20px;border-radius:30px;
+      background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(22px);transition:.28s ease;animation:up .7s ease both;
+    }
+    .access-card:nth-child(2){animation-delay:.06s}
+    .access-card:nth-child(3){animation-delay:.12s}
+    .access-card:nth-child(4){animation-delay:.18s}
+    .access-card:nth-child(5){animation-delay:.24s}
+    .access-card:hover{transform:translateY(-8px);background:rgba(255,255,255,.105);box-shadow:0 28px 80px rgba(0,0,0,.28)}
+    .access-card::before{
+      content:"";position:absolute;right:-45px;top:-45px;width:130px;height:130px;border-radius:50%;
+      background:linear-gradient(135deg,rgba(236,72,153,.34),rgba(59,130,246,.22));filter:blur(6px)
+    }
+    .icon{
+      width:48px;height:48px;border-radius:18px;display:grid;place-items:center;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);
+      font-size:22px;margin-bottom:18px;position:relative;z-index:2;
+    }
+    .access-card h3{font-size:22px;letter-spacing:-.04em;position:relative;z-index:2}
+    .access-card p{margin-top:8px;color:rgba(255,255,255,.58);line-height:1.45;font-size:14px;position:relative;z-index:2}
+    .access-card .enter{
+      display:inline-flex;margin-top:18px;padding:10px 13px;border-radius:999px;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);
+      font-size:13px;font-weight:900;color:rgba(255,255,255,.82);position:relative;z-index:2;
+    }
+
+    .account-card{
+      padding:20px;border-radius:30px;background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(22px);animation:up .7s ease .12s both;
+    }
+    .account-list{display:grid;gap:10px;margin-top:14px}
+    .account-item{
+      display:flex;gap:12px;align-items:center;padding:14px;border-radius:22px;
+      background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08)
+    }
+    .account-icon{width:38px;height:38px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.09)}
+    .account-item strong{display:block;font-size:14px}
+    .account-item span{display:block;margin-top:3px;color:rgba(255,255,255,.52);font-size:13px}
+
+    .bottom-nav{
+      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+      width:min(430px,calc(100% - 32px));height:72px;z-index:20;
+      border-radius:28px;background:rgba(12,12,28,.78);
+      border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px);
+      display:grid;grid-template-columns:repeat(3,1fr);padding:8px;
+      box-shadow:0 22px 65px rgba(0,0,0,.42);
+    }
+    .nav-item{
+      border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:4px;color:rgba(255,255,255,.58);font-size:12px;font-weight:900;transition:.25s;
+    }
+    .nav-item strong{font-size:20px;line-height:1}
+    .nav-item.active{
+      color:#fff;background:linear-gradient(135deg,rgba(236,72,153,.28),rgba(124,58,237,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .nav-item:hover{transform:translateY(-3px);color:#fff}
+
+    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes down{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes appear{from{opacity:0;transform:scale(.96) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+    @media(max-width:720px){
+      .page{padding:18px}
+      .brand{font-size:18px}
+      .top-btn{display:none}
+      .profile-hero{border-radius:34px;padding:18px}
+      .quick-stats{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="page">
+    <header>
+      <a class="brand" href="index.html">
+        <div class="brand-icon"><span>V</span></div>
+        <span>VYBE PASS</span>
+      </a>
+
+      <a href="pass.html" class="top-btn">Minha Carteira</a>
+    </header>
+
+    <main>
+      <section class="profile-hero">
+        <div class="cover"></div>
+
+        <div class="avatar">MM</div>
+
+        <div class="profile-info">
+          <h1>Matheus Moura</h1>
+          <p>@mhup4</p>
+
+          <div class="role-row">
+            <span class="role-pill main">🔥 Promoter Elite</span>
+            <span class="role-pill">📲 Staff</span>
+            <span class="role-pill">📈 Organizador</span>
+          </div>
+        </div>
+
+        <div class="quick-stats">
+          <div class="stat">
+            <small>Passes ativos</small>
+            <strong>3</strong>
+          </div>
+
+          <div class="stat">
+            <small>Eventos</small>
+            <strong>12</strong>
+          </div>
+
+          <div class="stat">
+            <small>Nível</small>
+            <strong>8</strong>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Seus acessos</h2>
+          <p>As áreas aparecem conforme seu nível dentro da VYBE.</p>
+        </div>
+
+        <div class="grid" style="margin-top:16px;">
+          <a href="pass.html" class="access-card">
+            <div class="icon">🎟️</div>
+            <h3>Carteira</h3>
+            <p>Veja seus passes ativos e QR Codes dos próximos eventos.</p>
+            <span class="enter">Entrar</span>
+          </a>
+
+          <a href="equipe.html" class="access-card">
+            <div class="icon">🔥</div>
+            <h3>Área Equipe</h3>
+            <p>Seu perfil de promoter com ranking, XP, conquistas e link pessoal.</p>
+            <span class="enter">Entrar</span>
+          </a>
+
+          <a href="checkin.html" class="access-card">
+            <div class="icon">📲</div>
+            <h3>Check-in</h3>
+            <p>Escaneie QR Codes, valide entradas e busque convidados.</p>
+            <span class="enter">Entrar</span>
+          </a>
+
+          <a href="organizador.html" class="access-card">
+            <div class="icon">📈</div>
+            <h3>Organizador</h3>
+            <p>Acompanhe eventos, equipe, convidados e resultados internos.</p>
+            <span class="enter">Entrar</span>
+          </a>
+
+          <a href="admin.html" class="access-card">
+            <div class="icon">⚙️</div>
+            <h3>Admin</h3>
+            <p>Gerencie eventos, permissões, usuários e estrutura da plataforma.</p>
+            <span class="enter">Entrar</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="account-card">
+        <div class="section-head">
+          <h2>Minha conta</h2>
+          <p>Dados básicos do seu perfil.</p>
+        </div>
+
+        <div class="account-list">
+          <div class="account-item">
+            <div class="account-icon">👤</div>
+            <div>
+              <strong>Nome completo</strong>
+              <span>Matheus Moura</span>
+            </div>
+          </div>
+
+          <div class="account-item">
+            <div class="account-icon">📱</div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>(11) 99999-9999</span>
+            </div>
+          </div>
+
+          <div class="account-item">
+            <div class="account-icon">📸</div>
+            <div>
+              <strong>Instagram</strong>
+              <span>@mhup4</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <strong>⌂</strong>
+      Home
+    </a>
+
+    <a href="pass.html" class="nav-item">
+      <strong>🎟️</strong>
+      Carteira
+    </a>
+
+    <a href="perfil.html" class="nav-item active">
+      <strong>👤</strong>
+      Perfil
+    </a>
+  </nav>
+
+  <script>
+    const cards = document.querySelectorAll(".access-card, .account-item, .stat");
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        card.animate(
+          [
+            { transform: "scale(1)" },
+            { transform: "scale(.97)" },
+            { transform: "scale(1)" }
+          ],
+          { duration: 220, easing: "ease-out" }
+        );
+      });
+    });
+  </script>
+</body>
+</html>

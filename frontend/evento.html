@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dubai Night | VYBE Pass</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif}
+    body{
+      min-height:100vh;color:#fff;overflow-x:hidden;padding-bottom:92px;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(236,72,153,.34), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(59,130,246,.26), transparent 34%),
+        radial-gradient(circle at 50% 100%, rgba(124,58,237,.38), transparent 40%),
+        #070713;
+    }
+    a{text-decoration:none;color:inherit}
+    .orb{position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(62px);opacity:.55;animation:float 8s ease-in-out infinite;pointer-events:none;z-index:1}
+    .orb.one{top:10%;left:-90px;background:#ec4899}
+    .orb.two{right:-90px;top:22%;background:#3b82f6;animation-delay:1.7s}
+    .orb.three{left:45%;bottom:-130px;background:#7c3aed;animation-delay:3s}
+    @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.08)}}
+
+    .page{position:relative;z-index:2;max-width:1180px;margin:auto;padding:24px}
+    header{display:flex;justify-content:space-between;align-items:center;animation:down .7s ease both}
+    .brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:900;letter-spacing:-.04em}
+    .brand-icon{width:43px;height:43px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);box-shadow:0 18px 45px rgba(124,58,237,.45)}
+    .brand-icon span{font-weight:900;font-size:23px}
+    .top-btn{padding:12px 17px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);font-weight:800;color:rgba(255,255,255,.86)}
+
+    main{padding:38px 0 34px;display:grid;grid-template-columns:1fr .78fr;gap:22px;align-items:stretch}
+
+    .hero-cover{
+      min-height:650px;border-radius:42px;position:relative;overflow:hidden;
+      background:
+        linear-gradient(to top, rgba(7,7,19,.94), rgba(7,7,19,.18), rgba(7,7,19,.2)),
+        linear-gradient(135deg, rgba(236,72,153,.72), rgba(124,58,237,.62), rgba(59,130,246,.58)),
+        url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=80");
+      background-size:cover;background-position:center;
+      box-shadow:0 36px 110px rgba(0,0,0,.42);
+      animation:appear .85s ease .1s both;
+    }
+
+    .hero-content{position:absolute;left:30px;right:30px;bottom:30px}
+    .badge{
+      display:inline-flex;margin-bottom:16px;padding:10px 14px;border-radius:999px;
+      background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.16);
+      backdrop-filter:blur(14px);font-size:13px;font-weight:900;
+    }
+    h1{font-size:clamp(52px,7vw,92px);line-height:.88;letter-spacing:-.08em}
+    .desc{margin-top:18px;color:rgba(255,255,255,.75);font-size:18px;line-height:1.6;max-width:620px}
+    .quick-info{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .quick-info span{
+      padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);
+      color:rgba(255,255,255,.86);font-size:13px;font-weight:900;
+    }
+
+    .side{display:grid;gap:16px}
+    .card{
+      border-radius:34px;padding:22px;background:rgba(255,255,255,.078);
+      border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(24px);
+      box-shadow:0 28px 85px rgba(0,0,0,.24);animation:up .75s ease both;
+    }
+    .card h2{font-size:27px;letter-spacing:-.05em;margin-bottom:8px}
+    .card p{color:rgba(255,255,255,.62);line-height:1.55}
+
+    .cta-card{position:sticky;top:24px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.06))}
+    .cta-btn{
+      width:100%;margin-top:20px;border:none;border-radius:999px;padding:17px 22px;
+      background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);
+      color:#fff;font-size:16px;font-weight:900;cursor:pointer;
+      box-shadow:0 22px 55px rgba(124,58,237,.44);transition:.25s;
+    }
+    .cta-btn:hover{transform:translateY(-4px) scale(1.02)}
+
+    .info-list{display:grid;gap:12px;margin-top:18px}
+    .info{
+      display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:22px;
+      background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08);
+    }
+    .info-icon{width:38px;height:38px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.1);flex-shrink:0}
+    .info strong{display:block;font-size:15px}
+    .info span{display:block;margin-top:4px;color:rgba(255,255,255,.58);font-size:14px;line-height:1.4}
+
+    .bottom-nav{
+      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+      width:min(430px,calc(100% - 32px));height:72px;z-index:20;
+      border-radius:28px;background:rgba(12,12,28,.78);
+      border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px);
+      display:grid;grid-template-columns:repeat(3,1fr);padding:8px;
+      box-shadow:0 22px 65px rgba(0,0,0,.42);
+    }
+    .nav-item{
+      border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:4px;color:rgba(255,255,255,.58);font-size:12px;font-weight:900;transition:.25s;
+    }
+    .nav-item strong{font-size:20px;line-height:1}
+    .nav-item.active{
+      color:#fff;background:linear-gradient(135deg,rgba(236,72,153,.28),rgba(124,58,237,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .nav-item:hover{transform:translateY(-3px);color:#fff}
+
+    .modal{
+      position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;justify-content:center;
+      background:rgba(0,0,0,.58);backdrop-filter:blur(14px);padding:18px;
+    }
+    .modal.active{display:flex}
+    .sheet{
+      width:min(520px,100%);border-radius:34px;padding:24px;
+      background:rgba(15,15,30,.94);border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 35px 110px rgba(0,0,0,.55);animation:sheetUp .32s ease both;
+    }
+    .sheet-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}
+    .sheet h2{font-size:28px;letter-spacing:-.05em}
+    .close{border:none;background:rgba(255,255,255,.09);color:#fff;width:42px;height:42px;border-radius:16px;cursor:pointer;font-size:20px}
+    .form{display:grid;gap:13px}
+    label{font-size:13px;font-weight:900;color:rgba(255,255,255,.7)}
+    input{
+      width:100%;margin-top:7px;border:none;outline:none;border-radius:20px;padding:16px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+      color:#fff;font-size:15px;
+    }
+    input::placeholder{color:rgba(255,255,255,.35)}
+    .submit{
+      margin-top:8px;border:none;border-radius:999px;padding:17px 22px;
+      background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);
+      color:#fff;font-size:16px;font-weight:900;cursor:pointer;
+    }
+    .success{display:none;text-align:center;padding:18px 0 4px}
+    .success .big{font-size:54px;margin-bottom:12px}
+    .success h3{font-size:28px;letter-spacing:-.05em}
+    .success p{margin-top:10px;color:rgba(255,255,255,.62);line-height:1.55}
+
+    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes down{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes appear{from{opacity:0;transform:scale(.96) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    @keyframes sheetUp{from{opacity:0;transform:translateY(42px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+    @media(max-width:980px){
+      main{grid-template-columns:1fr}
+      .hero-cover{min-height:560px}
+      .cta-card{position:relative;top:auto}
+    }
+    @media(max-width:560px){
+      .page{padding:18px}
+      .brand{font-size:18px}
+      .top-btn{display:none}
+      .hero-cover{min-height:560px;border-radius:34px}
+      .hero-content{left:20px;right:20px;bottom:22px}
+      .card{border-radius:28px;padding:18px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="page">
+    <header>
+      <a class="brand" href="index.html">
+        <div class="brand-icon"><span>V</span></div>
+        <span>VYBE PASS</span>
+      </a>
+
+      <a href="pass.html" class="top-btn">Meu Pass</a>
+    </header>
+
+    <main>
+      <section class="hero-cover">
+        <div class="hero-content">
+          <span class="badge">🎟️ Lista VIP aberta</span>
+          <h1>Dubai Night</h1>
+          <p class="desc">
+            Uma noite de funk, trap e energia absurda no Doha Gastro Bar.
+            Garanta seu VYBE Pass e apresente o QR Code na entrada.
+          </p>
+
+          <div class="quick-info">
+            <span>📍 Doha Gastro Bar</span>
+            <span>📅 15 Agosto</span>
+            <span>🕙 22h</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="card cta-card">
+          <h2>Garanta seu Pass</h2>
+          <p>Preencha seus dados em poucos segundos e receba seu QR digital.</p>
+          <button class="cta-btn" id="openModal">Garantir meu Pass</button>
+        </div>
+
+        <div class="card">
+          <h2>Informações</h2>
+
+          <div class="info-list">
+            <div class="info">
+              <div class="info-icon">📍</div>
+              <div>
+                <strong>Local</strong>
+                <span>Doha Gastro Bar • São Paulo</span>
+              </div>
+            </div>
+
+            <div class="info">
+              <div class="info-icon">📅</div>
+              <div>
+                <strong>Data</strong>
+                <span>15 Agosto • A partir das 22h</span>
+              </div>
+            </div>
+
+            <div class="info">
+              <div class="info-icon">🎟️</div>
+              <div>
+                <strong>Entrada</strong>
+                <span>Apresente seu VYBE Pass com QR Code na porta.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="nav-item active">
+    <strong>⌂</strong>
+    Home
+  </a>
+
+  <a href="pass.html" class="nav-item">
+    <strong>🎟️</strong>
+    Carteira
+  </a>
+
+  <a href="perfil.html" class="nav-item">
+    <strong>👤</strong>
+    Perfil
+  </a>
+</nav>
+
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div>
+          <h2>Garantir Pass</h2>
+          <p style="color:rgba(255,255,255,.56);margin-top:5px;">Dubai Night</p>
+        </div>
+        <button class="close" id="closeModal">×</button>
+      </div>
+
+      <form class="form" id="form">
+        <label>
+          Nome completo
+          <input type="text" placeholder="Ex: Matheus Moura" required>
+        </label>
+
+        <label>
+          WhatsApp
+          <input type="tel" placeholder="(11) 99999-9999" required>
+        </label>
+
+        <label>
+          Instagram
+          <input type="text" placeholder="@seuinstagram" required>
+        </label>
+
+        <button class="submit" type="submit">Gerar meu Pass</button>
+      </form>
+
+      <div class="success" id="success">
+        <div class="big">🎉</div>
+        <h3>Pass garantido!</h3>
+        <p>Seu VYBE Pass foi criado. Agora é só mostrar o QR na entrada.</p>
+        <a href="pass.html" class="submit" style="display:inline-flex;margin-top:18px;">Ver meu Pass</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("modal");
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    const form = document.getElementById("form");
+    const success = document.getElementById("success");
+
+    openModal.addEventListener("click", () => modal.classList.add("active"));
+    closeModal.addEventListener("click", () => modal.classList.remove("active"));
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("active");
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      form.style.display = "none";
+      success.style.display = "block";
+    });
+  </script>
+</body>
+</html>

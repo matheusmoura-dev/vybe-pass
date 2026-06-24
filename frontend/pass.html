@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carteira | VYBE Pass</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif}
+    body{
+      min-height:100vh;color:#fff;overflow-x:hidden;padding-bottom:96px;
+      background:
+        radial-gradient(circle at 16% 8%, rgba(236,72,153,.34), transparent 30%),
+        radial-gradient(circle at 88% 14%, rgba(59,130,246,.27), transparent 34%),
+        radial-gradient(circle at 50% 100%, rgba(124,58,237,.38), transparent 40%),
+        #070713;
+    }
+    a{text-decoration:none;color:inherit}
+
+    .orb{position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(62px);opacity:.55;animation:float 8s ease-in-out infinite;pointer-events:none;z-index:1}
+    .orb.one{top:10%;left:-90px;background:#ec4899}
+    .orb.two{right:-90px;top:22%;background:#3b82f6;animation-delay:1.7s}
+    .orb.three{left:45%;bottom:-130px;background:#7c3aed;animation-delay:3s}
+    @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.08)}}
+
+    .page{position:relative;z-index:2;max-width:980px;margin:auto;padding:24px}
+    header{display:flex;justify-content:space-between;align-items:center;animation:down .7s ease both}
+    .brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:900;letter-spacing:-.04em}
+    .brand-icon{width:43px;height:43px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);box-shadow:0 18px 45px rgba(124,58,237,.45)}
+    .brand-icon span{font-weight:900;font-size:23px}
+    .top-btn{padding:12px 17px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);font-weight:800;color:rgba(255,255,255,.86)}
+
+    main{padding:38px 0 60px}
+    .title{animation:up .7s ease .08s both}
+    .title .badge{
+      display:inline-flex;padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.085);border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(18px);font-weight:900;color:rgba(255,255,255,.84);
+      margin-bottom:18px;
+    }
+    h1{font-size:clamp(42px,7vw,74px);line-height:.9;letter-spacing:-.08em}
+    .title p{margin-top:16px;color:rgba(255,255,255,.62);font-size:17px;line-height:1.6;max-width:620px}
+
+    .wallet-grid{margin-top:28px;display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:start}
+    .pass-list{display:grid;gap:14px}
+    .mini-pass{
+      padding:16px;border-radius:28px;background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(22px);
+      display:flex;gap:14px;align-items:center;cursor:pointer;transition:.25s;
+      animation:up .7s ease both;
+    }
+    .mini-pass.active{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(124,58,237,.18),rgba(59,130,246,.14));border-color:rgba(255,255,255,.2)}
+    .mini-pass:hover{transform:translateY(-6px);background:rgba(255,255,255,.105)}
+    .mini-cover{
+      width:76px;height:76px;border-radius:22px;flex-shrink:0;
+      background:linear-gradient(135deg,rgba(236,72,153,.9),rgba(124,58,237,.85),rgba(59,130,246,.8));
+    }
+    .mini-cover.green{background:linear-gradient(135deg,rgba(34,197,94,.8),rgba(124,58,237,.85),rgba(236,72,153,.72))}
+    .mini-content{flex:1}
+    .mini-content h3{font-size:19px;letter-spacing:-.04em}
+    .mini-content p{margin-top:5px;color:rgba(255,255,255,.55);font-size:13px;line-height:1.4}
+    .mini-status{padding:8px 10px;border-radius:999px;background:rgba(34,197,94,.16);color:#86efac;font-size:12px;font-weight:900}
+
+    .pass-stage{
+      border-radius:40px;padding:20px;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px);
+      box-shadow:0 34px 95px rgba(0,0,0,.35);animation:appear .8s ease .2s both;
+    }
+
+    .ticket{
+      position:relative;overflow:hidden;border-radius:34px;padding:24px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(236,72,153,.34), transparent 34%),
+        radial-gradient(circle at 90% 20%, rgba(59,130,246,.28), transparent 34%),
+        linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.045));
+      border:1px solid rgba(255,255,255,.16);
+      min-height:620px;
+    }
+    .ticket::before,.ticket::after{
+      content:"";position:absolute;top:315px;width:38px;height:38px;border-radius:50%;
+      background:#070713;border:1px solid rgba(255,255,255,.08);z-index:4;
+    }
+    .ticket::before{left:-20px}
+    .ticket::after{right:-20px}
+    .ticket-shine{
+      position:absolute;inset:-60%;
+      background:linear-gradient(120deg,transparent,rgba(255,255,255,.17),transparent);
+      animation:shine 4.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes shine{0%{transform:translateX(-65%) rotate(20deg)}45%,100%{transform:translateX(65%) rotate(20deg)}}
+
+    .ticket-top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+    .ticket-label{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.56)}
+    .ticket h2{margin-top:10px;font-size:42px;line-height:.95;letter-spacing:-.07em}
+    .status-pill{padding:10px 12px;border-radius:999px;background:rgba(34,197,94,.16);color:#86efac;border:1px solid rgba(134,239,172,.18);font-size:12px;font-weight:900;white-space:nowrap}
+
+    .ticket-info{position:relative;z-index:2;margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .info{
+      padding:15px;border-radius:22px;background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .info small{display:block;color:rgba(255,255,255,.46);font-weight:800;margin-bottom:5px}
+    .info strong{font-size:15px}
+
+    .divider{
+      position:relative;z-index:2;margin:30px 0;border-top:1px dashed rgba(255,255,255,.24);
+    }
+
+    .qr-wrap{position:relative;z-index:2;text-align:center}
+    .qr-title{font-weight:900;letter-spacing:-.03em;font-size:18px;margin-bottom:14px}
+    .qr{
+      margin:0 auto;width:230px;height:230px;border-radius:28px;background:#fff;
+      padding:14px;box-shadow:0 24px 70px rgba(0,0,0,.32);
+    }
+    .fake-qr{
+      width:100%;height:100%;border-radius:18px;background:
+        linear-gradient(90deg,#111 10px,transparent 10px) 0 0/34px 34px,
+        linear-gradient(#111 10px,transparent 10px) 0 0/34px 34px,
+        repeating-linear-gradient(45deg,#111 0 8px,#fff 8px 16px);
+      opacity:.9;
+    }
+
+    .guest{
+      position:relative;z-index:2;margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .guest strong{font-size:17px}
+    .guest span{display:block;margin-top:4px;color:rgba(255,255,255,.5);font-weight:700}
+    .code{font-size:13px;font-weight:900;color:rgba(255,255,255,.55);text-align:right}
+
+    .actions{display:flex;gap:12px;margin-top:16px}
+    .action-btn{
+      flex:1;border:none;border-radius:999px;padding:15px 16px;
+      color:#fff;font-weight:900;cursor:pointer;transition:.25s;
+      background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(16px);
+    }
+    .action-btn.primary{
+      background:linear-gradient(135deg,#ec4899,#7c3aed,#3b82f6);
+      box-shadow:0 18px 45px rgba(124,58,237,.36);
+    }
+    .action-btn:hover{transform:translateY(-4px)}
+
+    .history{margin-top:18px;padding:20px;border-radius:30px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(22px)}
+    .history h2{font-size:25px;letter-spacing:-.05em}
+    .empty{margin-top:14px;color:rgba(255,255,255,.54);line-height:1.5}
+
+    .bottom-nav{
+      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+      width:min(430px,calc(100% - 32px));height:72px;z-index:20;
+      border-radius:28px;background:rgba(12,12,28,.78);
+      border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px);
+      display:grid;grid-template-columns:repeat(3,1fr);padding:8px;
+      box-shadow:0 22px 65px rgba(0,0,0,.42);
+    }
+    .nav-item{
+      border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:4px;color:rgba(255,255,255,.58);font-size:12px;font-weight:900;transition:.25s;
+    }
+    .nav-item strong{font-size:20px;line-height:1}
+    .nav-item.active{
+      color:#fff;background:linear-gradient(135deg,rgba(236,72,153,.28),rgba(124,58,237,.26),rgba(59,130,246,.22));
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .nav-item:hover{transform:translateY(-3px);color:#fff}
+
+    @keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes down{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes appear{from{opacity:0;transform:scale(.96) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+    @media(max-width:860px){
+      .wallet-grid{grid-template-columns:1fr}
+      .ticket{min-height:auto}
+    }
+    @media(max-width:560px){
+      .page{padding:18px}
+      .brand{font-size:18px}
+      .top-btn{display:none}
+      .ticket{border-radius:30px;padding:20px}
+      .ticket h2{font-size:36px}
+      .ticket-info{grid-template-columns:1fr}
+      .qr{width:210px;height:210px}
+      .actions{flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="page">
+    <header>
+      <a class="brand" href="index.html">
+        <div class="brand-icon"><span>V</span></div>
+        <span>VYBE PASS</span>
+      </a>
+
+      <a href="perfil.html" class="top-btn">Perfil</a>
+    </header>
+
+    <main>
+      <section class="title">
+        <span class="badge">🎟️ Carteira digital</span>
+        <h1>Meus Passes</h1>
+        <p>Seus passes ativos ficam aqui. Na entrada, apresente o QR Code para o staff validar.</p>
+      </section>
+
+      <section class="wallet-grid">
+        <aside class="pass-list">
+          <div class="mini-pass active">
+            <div class="mini-cover"></div>
+            <div class="mini-content">
+              <h3>Dubai Night</h3>
+              <p>15 Ago • Doha Gastro Bar</p>
+            </div>
+            <span class="mini-status">Ativo</span>
+          </div>
+
+          <div class="mini-pass">
+            <div class="mini-cover green"></div>
+            <div class="mini-content">
+              <h3>Medusa Night</h3>
+              <p>30 Ago • Doha Gastro Bar</p>
+            </div>
+            <span class="mini-status">Ativo</span>
+          </div>
+
+          <div class="history">
+            <h2>Histórico</h2>
+            <p class="empty">Seus passes utilizados vão aparecer aqui depois dos eventos.</p>
+          </div>
+        </aside>
+
+        <section class="pass-stage">
+          <div class="ticket">
+            <div class="ticket-shine"></div>
+
+            <div class="ticket-top">
+              <div>
+                <div class="ticket-label">VYBE PASS</div>
+                <h2>Dubai Night</h2>
+              </div>
+
+              <span class="status-pill">Confirmado</span>
+            </div>
+
+            <div class="ticket-info">
+              <div class="info">
+                <small>Data</small>
+                <strong>15 Agosto • 22h</strong>
+              </div>
+
+              <div class="info">
+                <small>Local</small>
+                <strong>Doha Gastro Bar</strong>
+              </div>
+
+              <div class="info">
+                <small>Entrada</small>
+                <strong>Lista VIP</strong>
+              </div>
+
+              <div class="info">
+                <small>Status</small>
+                <strong>QR liberado</strong>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="qr-wrap">
+              <div class="qr-title">Apresente este QR na entrada</div>
+              <div class="qr">
+                <div class="fake-qr"></div>
+              </div>
+            </div>
+
+            <div class="guest">
+              <div>
+                <strong>Matheus Moura</strong>
+                <span>@mhup4</span>
+              </div>
+
+              <div class="code">
+                Código<br>
+                VP-8F42
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="action-btn primary">Compartilhar Pass</button>
+            <button class="action-btn">Salvar imagem</button>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <strong>⌂</strong>
+      Home
+    </a>
+
+    <a href="pass.html" class="nav-item active">
+      <strong>🎟️</strong>
+      Carteira
+    </a>
+
+    <a href="perfil.html" class="nav-item">
+      <strong>👤</strong>
+      Perfil
+    </a>
+  </nav>
+
+  <script>
+    const miniPasses = document.querySelectorAll(".mini-pass");
+    const buttons = document.querySelectorAll("button");
+
+    miniPasses.forEach((item) => {
+      item.addEventListener("click", () => {
+        miniPasses.forEach((pass) => pass.classList.remove("active"));
+        item.classList.add("active");
+
+        document.querySelector(".pass-stage").animate(
+          [
+            { opacity: .75, transform: "scale(.98) translateY(10px)" },
+            { opacity: 1, transform: "scale(1) translateY(0)" }
+          ],
+          { duration: 320, easing: "ease-out" }
+        );
+      });
+    });
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const old = btn.textContent;
+        btn.textContent = "Feito ✨";
+
+        btn.animate(
+          [
+            { transform: "scale(1)" },
+            { transform: "scale(.96)" },
+            { transform: "scale(1)" }
+          ],
+          { duration: 220, easing: "ease-out" }
+        );
+
+        setTimeout(() => btn.textContent = old, 1200);
+      });
+    });
+  </script>
+</body>
+</html>
